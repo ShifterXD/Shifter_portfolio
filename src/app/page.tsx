@@ -122,7 +122,7 @@ const modules: RoomModule[] = [
     bullets: [
       "If you build in AI, education, admissions, student tools, or personal systems — connect.",
       "The contact area should feel like opening the door from the room to the outside world.",
-      "Links: GitHub, email, Telegram/LinkedIn when ready, project demos, and Mycelium updates.",
+      "Public links are intentionally minimal for now: GitHub is live, private demos and direct contact are shared on request.",
     ],
   },
 ];
@@ -378,7 +378,7 @@ export default function Home() {
               <div className="project-status">{project.status}</div>
               <h3>{project.name}</h3>
               <p>{project.text}</p>
-              <a href="#contact">Request link <ExternalLink size={16} /></a>
+              <a href="#contact">Details on request <ExternalLink size={16} /></a>
             </article>
           ))}
         </div>
@@ -422,9 +422,9 @@ export default function Home() {
           <p>Let’s connect. This room is the public entrance to the work behind it.</p>
         </div>
         <div className="contact-actions">
-          <a href="mailto:hello@shifter.dev"><Mail size={18} /> Email</a>
-          <a href="#"><MessageCircle size={18} /> Telegram / socials soon</a>
-          <a href="#"><Code2 size={18} /> GitHub soon</a>
+          <a href="mailto:agentgmailbox@gmail.com"><Mail size={18} /> Email</a>
+          <a href="#contact"><MessageCircle size={18} /> Telegram / LinkedIn on request</a>
+          <a href="https://github.com/ShifterXD" target="_blank" rel="noreferrer"><Code2 size={18} /> GitHub</a>
         </div>
       </section>
 
