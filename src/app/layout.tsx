@@ -16,11 +16,11 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://shifterxd.github.io/Shifter_portfolio"),
   title: "Shifter's Room — Pavel Tagiev Portfolio",
   description:
-    "A symbolic 2.5D room portfolio for Pavel “Shifter” Tagiev — AI systems, global education, projects, and discipline.",
+    "A concise 2.5D room portfolio for Pavel “Shifter” Tagiev — AI education products, international study, and proof-driven building.",
   openGraph: {
     title: "Shifter's Room — Pavel Tagiev Portfolio",
     description:
-      "Enter a symbolic 2.5D room where every object represents Pavel's projects, learning path, AI systems, and discipline.",
+      "A short professional story told through a symbolic room: who Pavel is, what he is building, and why it matters for AI and global education.",
     url: "https://shifterxd.github.io/Shifter_portfolio/",
     siteName: "Shifter's Room",
     type: "website",

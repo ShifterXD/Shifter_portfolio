@@ -38,91 +38,91 @@ const modules: RoomModule[] = [
     id: "desk",
     object: "Desk / Monitor",
     title: "Projects Desk",
-    short: "AI products, demos, and proof of work.",
+    short: "AI products and proof of work.",
     icon: <Monitor />,
     accent: "#38bdf8",
     bullets: [
-      "Mycelium University — AI platform for international students building realistic admission roadmaps.",
-      "Portfolio lab — this room becomes the public interface for my identity and work.",
-      "Shipping rule: every project needs a real link, clear problem, and visible proof.",
+      "Mycelium University — an AI platform for international students who need realistic admission roadmaps.",
+      "This portfolio is part of the proof: a custom interface, not a recycled template.",
+      "Principle: every project should explain the problem, the system, and the evidence.",
     ],
   },
   {
     id: "shelf",
     object: "Bookshelf",
     title: "Learning Shelf",
-    short: "SAT, IELTS, CS50x, German, Data/AI.",
+    short: "Academic path and technical growth.",
     icon: <BookOpen />,
     accent: "#f59e0b",
     bullets: [
-      "SAT → 1400 target with math mastery and timed practice.",
-      "IELTS → 7.0–7.5+ for international English-taught programs.",
-      "CS50x, Python, data science, AI, business analytics, and German B1/B2 path.",
+      "Preparing for English-taught international programs through SAT, IELTS, CS50x, and applied projects.",
+      "Learning direction: data science, AI products, business analytics, and economics/management.",
+      "The goal is not collecting badges — it is building enough skill to solve real student problems.",
     ],
   },
   {
     id: "map",
     object: "Wall Map",
     title: "University Roadmap",
-    short: "Germany → global universities → international life.",
+    short: "From Germany to global programs.",
     icon: <Map />,
     accent: "#a78bfa",
     bullets: [
-      "Targets include TUM Heilbronn, Nagoya G30, JADS, UC3M, and other English-taught options.",
-      "The goal is not fantasy prestige — it is realistic fit, requirements, fees, and execution plan.",
-      "Mycelium University is built from this exact problem: students need clarity, not random lists.",
+      "Exploring realistic English-taught programs in Europe and Asia, including TUM Heilbronn, Nagoya G30, JADS, and UC3M.",
+      "The research focuses on fit, requirements, fees, outcomes, and execution — not prestige fantasy.",
+      "Mycelium University comes from this need: students deserve clarity before they commit years of effort.",
     ],
   },
   {
     id: "core",
     object: "Kapicode Core",
     title: "AI Agent System",
-    short: "Personal AI assistant layer for planning and automation.",
+    short: "A practical layer for research and building.",
     icon: <Brain />,
     accent: "#22c55e",
     bullets: [
-      "Kapicode helps with planning, research, Obsidian, coding, screen-time data, and daily reports.",
-      "The website shows the idea visually: my room is not decoration, it is an operating system.",
-      "AI is used as leverage — not as a generic buzzword or robot mascot.",
+      "Kapicode is my AI workflow layer for research, planning, coding, notes, and project execution.",
+      "The room shows the idea visually: tools are connected into one operating environment.",
+      "AI is presented as leverage for disciplined work — not as decoration or a buzzword.",
     ],
   },
   {
     id: "sport",
-    object: "Sports Corner",
+    object: "Discipline Corner",
     title: "Discipline Corner",
-    short: "Basketball, strength, ACL recovery, routine.",
+    short: "Consistency beyond the screen.",
     icon: <Dumbbell />,
     accent: "#fb7185",
     bullets: [
-      "Basketball since childhood and a long-term dunk / strength goal.",
-      "ACL recovery and symmetry work turned training into a discipline system.",
-      "This corner keeps the site human: ambition is physical, not just digital.",
+      "The corner represents discipline, recovery, and long-term consistency — the human side of building.",
+      "It keeps the site grounded: ambition is not only technical, it is behavioral.",
+      "For a professional audience, it signals resilience without turning the portfolio into a diary.",
     ],
   },
   {
     id: "window",
     object: "Window",
     title: "Outside World",
-    short: "Heilbronn now. International future next.",
+    short: "A room aimed outward.",
     icon: <MoonStar />,
     accent: "#60a5fa",
     bullets: [
-      "The window represents the outside path: Germany, universities, community, independence.",
-      "The room is calm, but it is aimed outward — building a life, not just a website.",
-      "Visual mood: night focus, warm lamp, city lights, and a future that feels reachable.",
+      "The window stands for the transition from local student life to international study, collaboration, and independence.",
+      "The room is calm and focused, but the direction is outward: universities, teams, users, and real-world impact.",
+      "The visual mood is night focus, warm light, and a future that feels reachable rather than exaggerated.",
     ],
   },
   {
     id: "contact",
     object: "Door / Signal",
     title: "Contact Signal",
-    short: "For builders, students, AI and education people.",
+    short: "For universities, builders, and future collaborators.",
     icon: <Mail />,
     accent: "#2dd4bf",
     bullets: [
-      "If you build in AI, education, admissions, student tools, or personal systems — connect.",
-      "The contact area should feel like opening the door from the room to the outside world.",
-      "Public links are intentionally minimal for now: GitHub is live, private demos and direct contact are shared on request.",
+      "This site is designed for people who want to understand who I am, what I build, and why it matters.",
+      "If the work connects to AI, education, admissions, or student systems, I am open to conversations.",
+      "Public links are intentionally focused: GitHub is live, private demos and direct contact are shared on request.",
     ],
   },
 ];
@@ -131,26 +131,49 @@ const projects = [
   {
     name: "Mycelium University",
     status: "flagship",
-    text: "AI platform helping international students understand realistic university options, requirements, and admission roadmaps.",
+    text: "AI platform for international students: profile analysis, realistic university fit, requirements, and admission roadmaps.",
   },
   {
     name: "Kapicode Agent System",
-    status: "private OS",
-    text: "Personal AI agent workflows for planning, Obsidian, health/screen-time data, reminders, and research.",
+    status: "AI workflow",
+    text: "A practical agent layer for research, planning, coding, notes, and execution — built to increase output quality.",
   },
   {
     name: "SAT Math Mastery",
-    status: "active",
-    text: "30-day SAT math practice system with notes, visual cards, and mastery tracking toward 1400 SAT.",
+    status: "learning system",
+    text: "Structured SAT preparation with practice, visual notes, and progress tracking toward stronger quantitative readiness.",
   },
   {
     name: "Shifter's Room",
     status: "portfolio",
-    text: "This website: a symbolic 2.5D room instead of a generic developer template or painful 3D model.",
+    text: "This website: a custom symbolic room interface built to communicate identity without a generic template or heavy 3D model.",
   },
 ];
 
-const learning = ["SAT 1400", "IELTS 7.5", "CS50x", "German B1/B2", "Data Science", "AI Products"];
+const storySteps = [
+  {
+    label: "01 · who",
+    title: "I’m Pavel Tagiev — Shifter.",
+    text: "An 18-year-old student in Germany building at the intersection of AI, international education, and personal systems.",
+  },
+  {
+    label: "02 · problem",
+    title: "The problem I keep seeing: unclear paths.",
+    text: "Students often face vague university lists, confusing requirements, and unrealistic plans. I want to make that path clearer.",
+  },
+  {
+    label: "03 · build",
+    title: "So I’m building Mycelium University.",
+    text: "An AI platform that helps international students understand fit, requirements, and the next actions they should take.",
+  },
+  {
+    label: "04 · proof",
+    title: "This room is the interface to the work.",
+    text: "The desk, shelf, map, and AI core are not decoration — they show the systems behind my projects, learning, and direction.",
+  },
+];
+
+const learning = ["SAT", "IELTS", "CS50x", "Data Science", "AI Products", "Global Education"];
 
 function ModulePanel({ module }: { module: RoomModule }) {
   return (
@@ -325,16 +348,16 @@ export default function Home() {
 
       <section id="room" className="hero-section">
         <div className="hero-copy">
-          <p className="eyebrow">18 · Germany · AI × education × discipline</p>
+          <p className="eyebrow">18 · Germany · AI × education × systems</p>
           <h1>
-            Enter my room. <span>Every object is a part of the system I am building.</span>
+            From a student room <span>to an AI education platform.</span>
           </h1>
           <p className="hero-lead">
-            I’m Pavel “Shifter” Tagiev — building Mycelium University, preparing for global universities, and using AI agents to turn ambition into routines, projects, and proof.
+            I’m Pavel “Shifter” Tagiev — an international student in Germany building Mycelium University: a clearer way for students to understand university fit, requirements, and their next steps.
           </p>
           <div className="hero-actions">
-            <a href="#projects">View proof of work <ArrowUpRight size={18} /></a>
-            <a href="#panel-core">Open Kapicode Core <Sparkles size={18} /></a>
+            <a href="#story">Read the 2-minute story <ArrowUpRight size={18} /></a>
+            <a href="#projects">View proof of work <Sparkles size={18} /></a>
           </div>
         </div>
 
@@ -343,27 +366,27 @@ export default function Home() {
         </div>
 
         <div className="mobile-room-card">
-          <div className="mobile-room-visual">
-            <div className="mini-window" />
-            <div className="mini-monitor" />
-            <div className="mini-shelf" />
-            <div className="mini-orb" />
-          </div>
-          <p className="eyebrow">Mobile room index</p>
-          <h2>Shifter’s Room</h2>
-          <p>Tap a module. Mobile is designed like a native personal dashboard, not a squeezed desktop scene.</p>
+          <p className="eyebrow">The room metaphor</p>
+          <h2>One place for the story.</h2>
+          <p>The room is a simple way to explain the work: a desk for projects, a shelf for learning, a map for universities, and an AI core for execution.</p>
         </div>
       </section>
 
-      <section className="mobile-index" aria-label="Room modules">
-        {modules.map((module, index) => (
-        <a key={module.id} href={`#panel-${module.id}`} style={{ "--module": module.accent } as React.CSSProperties}>
-          <span>{String(index + 1).padStart(2, "0")}</span>
-          <div>{module.icon}</div>
-          <strong>{module.object}</strong>
-          <small>{module.short}</small>
-        </a>
-        ))}
+      <section id="story" className="story-section" aria-label="Two minute story">
+        <div className="section-heading story-heading">
+          <p className="eyebrow">2-minute story</p>
+          <h2>From who I am to why this matters.</h2>
+          <p>Designed for universities, future collaborators, and people who want the signal without reading a long personal diary.</p>
+        </div>
+        <div className="story-grid">
+          {storySteps.map((step) => (
+            <article key={step.label}>
+              <span>{step.label}</span>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section id="projects" className="content-section">
@@ -386,26 +409,26 @@ export default function Home() {
 
       <section id="system" className="system-section">
         <div className="system-card wide">
-          <p className="eyebrow">Kapicode Core</p>
-          <h2>My personal operating system is part of the story.</h2>
+          <p className="eyebrow">Execution system</p>
+          <h2>AI is the workflow, not the headline.</h2>
           <p>
-            Obsidian, AI agents, health data, screen-time tracking, SAT/IELTS planning, and Mycelium research are connected into one loop: plan → execute → measure → improve.
+            I use AI agents, structured notes, research workflows, and project roadmaps to move from idea to implementation. The goal is simple: better decisions, faster iteration, and visible proof.
           </p>
         </div>
         <div className="system-card">
           <Activity />
-          <strong>Daily telemetry</strong>
-          <span>sleep, steps, screen time, routines</span>
+          <strong>Research loop</strong>
+          <span>sources, notes, analysis, next actions</span>
         </div>
         <div className="system-card">
           <Target />
           <strong>Admission roadmap</strong>
-          <span>SAT, IELTS, CS50x, universities</span>
+          <span>fit, requirements, fees, deadlines</span>
         </div>
         <div className="system-card">
           <FolderKanban />
           <strong>Builder pipeline</strong>
-          <span>ideas → MVP → proof → community</span>
+          <span>problem → prototype → proof → users</span>
         </div>
       </section>
 
