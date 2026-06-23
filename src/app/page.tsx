@@ -327,6 +327,15 @@ export default function Home() {
       <div className="ambient-grid" />
       <div className="ambient-light ambient-a" />
       <div className="ambient-light ambient-b" />
+      <div className="mobile-space-field" aria-hidden="true">
+        <span className="star-layer star-layer-a" />
+        <span className="star-layer star-layer-b" />
+        <span className="star-layer star-layer-c" />
+        <span className="mobile-aurora mobile-aurora-a" />
+        <span className="mobile-aurora mobile-aurora-b" />
+        <span className="shooting-star shooting-star-a" />
+        <span className="shooting-star shooting-star-b" />
+      </div>
       {modules.map((module) => (
         <ModulePanel key={module.id} module={module} />
       ))}
@@ -366,9 +375,17 @@ export default function Home() {
         </div>
 
         <div className="mobile-room-card">
+          <div className="mobile-cosmos-card" aria-hidden="true">
+            <span className="orbit orbit-one" />
+            <span className="orbit orbit-two" />
+            <span className="cosmic-core" />
+            <span className="cosmic-node node-a" />
+            <span className="cosmic-node node-b" />
+            <span className="cosmic-node node-c" />
+          </div>
           <p className="eyebrow">The room metaphor</p>
-          <h2>One place for the story.</h2>
-          <p>The room is a simple way to explain the work: a desk for projects, a shelf for learning, a map for universities, and an AI core for execution.</p>
+          <h2>A focused room, seen from orbit.</h2>
+          <p>The mobile version turns the room into a night-sky signal: one student, one direction, and a system built to make education clearer.</p>
         </div>
       </section>
 
