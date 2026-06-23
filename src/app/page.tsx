@@ -1,472 +1,433 @@
 "use client";
 
-import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import {
+  Activity,
+  ArrowUpRight,
   BookOpen,
   Brain,
-  BriefcaseBusiness,
-  CalendarDays,
-  Camera,
-  CircleUserRound,
   Code2,
-  Folder,
-  Gamepad2,
-  Goal,
-  GraduationCap,
+  Dumbbell,
+  ExternalLink,
+  FolderKanban,
   Mail,
+  Map,
   MessageCircle,
+  Monitor,
   MoonStar,
   Sparkles,
-  Trophy,
+  Target,
   X,
 } from "lucide-react";
 import type { ReactNode } from "react";
-import { useState } from "react";
 
-type Panel =
-  | "projects"
-  | "skills"
-  | "experience"
-  | "timeline"
-  | "goals"
-  | "contact"
-  | "capicode"
-  | "languages"
-  | "books"
-  | "certificates"
-  | "basketball"
-  | "games";
+type RoomModuleId = "desk" | "shelf" | "map" | "core" | "sport" | "window" | "contact";
 
-type PanelContent = {
+type RoomModule = {
+  id: RoomModuleId;
+  object: string;
   title: string;
-  kicker: string;
-  body: string[];
+  short: string;
+  icon: ReactNode;
   accent: string;
+  bullets: string[];
 };
 
-const desktopFolders: { id: Panel; label: string; icon: ReactNode }[] = [
-  { id: "projects", label: "Projects", icon: <Folder /> },
-  { id: "skills", label: "Skills", icon: <Code2 /> },
-  { id: "experience", label: "Experience", icon: <BriefcaseBusiness /> },
-  { id: "timeline", label: "Timeline", icon: <CalendarDays /> },
-  { id: "goals", label: "Goals", icon: <Goal /> },
-  { id: "contact", label: "Contact", icon: <Mail /> },
-];
-
-const socialIcons = [
-  { label: "Instagram", icon: <Camera />, href: "#" },
-  { label: "Discord", icon: <MessageCircle />, href: "#" },
-  { label: "Reddit", icon: <CircleUserRound />, href: "#" },
-  { label: "Gmail", icon: <Mail />, href: "mailto:hello@shifter.dev" },
-];
-
-const panelContent: Record<Panel, PanelContent> = {
-  projects: {
-    title: "Projects",
-    kicker: "Builder mode",
-    accent: "from-cyan-300 to-violet-300",
-    body: [
+const modules: RoomModule[] = [
+  {
+    id: "desk",
+    object: "Desk / Monitor",
+    title: "Projects Desk",
+    short: "AI products, demos, and proof of work.",
+    icon: <Monitor />,
+    accent: "#38bdf8",
+    bullets: [
       "Mycelium University — AI platform for international students building realistic admission roadmaps.",
-      "Pavel's Room — an interactive identity world instead of a generic portfolio.",
-      "Future demos will live here with product notes, launch metrics, and real links.",
+      "Portfolio lab — this room becomes the public interface for my identity and work.",
+      "Shipping rule: every project needs a real link, clear problem, and visible proof.",
     ],
   },
-  skills: {
-    title: "Skills",
-    kicker: "Tools I use to build",
-    accent: "from-emerald-300 to-cyan-300",
-    body: [
-      "AI agents, automation, product thinking, research, and modern web development.",
-      "Learning path: CS50x, Python, data science, Next.js, Supabase, and TypeScript.",
-      "Strengths: strategy, fast learning, international perspective, and execution with AI.",
+  {
+    id: "shelf",
+    object: "Bookshelf",
+    title: "Learning Shelf",
+    short: "SAT, IELTS, CS50x, German, Data/AI.",
+    icon: <BookOpen />,
+    accent: "#f59e0b",
+    bullets: [
+      "SAT → 1400 target with math mastery and timed practice.",
+      "IELTS → 7.0–7.5+ for international English-taught programs.",
+      "CS50x, Python, data science, AI, business analytics, and German B1/B2 path.",
     ],
   },
-  experience: {
-    title: "Experience",
-    kicker: "Student → builder → founder",
-    accent: "from-amber-200 to-orange-300",
-    body: [
-      "Greek high school graduate in Germany, focused on AI, economics, data, and entrepreneurship.",
-      "Building real products while preparing for international university admissions.",
+  {
+    id: "map",
+    object: "Wall Map",
+    title: "University Roadmap",
+    short: "Germany → global universities → international life.",
+    icon: <Map />,
+    accent: "#a78bfa",
+    bullets: [
+      "Targets include TUM Heilbronn, Nagoya G30, JADS, UC3M, and other English-taught options.",
+      "The goal is not fantasy prestige — it is realistic fit, requirements, fees, and execution plan.",
+      "Mycelium University is built from this exact problem: students need clarity, not random lists.",
     ],
   },
-  timeline: {
-    title: "Timeline",
-    kicker: "Life journey",
-    accent: "from-fuchsia-300 to-rose-300",
-    body: [
-      "Basketball since childhood, multilingual upbringing, and an international education path.",
-      "2026 summer: IELTS, SAT, CS50x, Mycelium, personal brand, and German B1 path.",
+  {
+    id: "core",
+    object: "Kapicode Core",
+    title: "AI Agent System",
+    short: "Personal AI assistant layer for planning and automation.",
+    icon: <Brain />,
+    accent: "#22c55e",
+    bullets: [
+      "Kapicode helps with planning, research, Obsidian, coding, screen-time data, and daily reports.",
+      "The website shows the idea visually: my room is not decoration, it is an operating system.",
+      "AI is used as leverage — not as a generic buzzword or robot mascot.",
     ],
   },
-  goals: {
-    title: "Goals",
-    kicker: "Future founder energy",
-    accent: "from-lime-200 to-emerald-300",
-    body: [
-      "Build Mycelium into a useful product for students worldwide.",
-      "Reach strong university options in Data Science, AI, Management, or Economics.",
-      "Become a one-person army with AI agents, discipline, and deep work.",
+  {
+    id: "sport",
+    object: "Sports Corner",
+    title: "Discipline Corner",
+    short: "Basketball, strength, ACL recovery, routine.",
+    icon: <Dumbbell />,
+    accent: "#fb7185",
+    bullets: [
+      "Basketball since childhood and a long-term dunk / strength goal.",
+      "ACL recovery and symmetry work turned training into a discipline system.",
+      "This corner keeps the site human: ambition is physical, not just digital.",
     ],
   },
-  contact: {
-    title: "Contact",
-    kicker: "Let’s connect",
-    accent: "from-sky-300 to-indigo-300",
-    body: [
-      "Instagram, Discord, Reddit, and Gmail links live as desktop icons inside Shifter OS.",
-      "This page will become Pavel’s personal operating system and public identity hub.",
+  {
+    id: "window",
+    object: "Window",
+    title: "Outside World",
+    short: "Heilbronn now. International future next.",
+    icon: <MoonStar />,
+    accent: "#60a5fa",
+    bullets: [
+      "The window represents the outside path: Germany, universities, community, independence.",
+      "The room is calm, but it is aimed outward — building a life, not just a website.",
+      "Visual mood: night focus, warm lamp, city lights, and a future that feels reachable.",
     ],
   },
-  capicode: {
-    title: "Agent Capicode",
-    kicker: "Sleeping AI mascot",
-    accent: "from-amber-200 to-cyan-200",
-    body: [
-      "Capicode is my personal AI agent, powered by Hermes.",
-      "It helps me organize projects, research topics, automate tasks, learn skills, and manage daily life.",
-      "Basically: a capybara-shaped second brain.",
+  {
+    id: "contact",
+    object: "Door / Signal",
+    title: "Contact Signal",
+    short: "For builders, students, AI and education people.",
+    icon: <Mail />,
+    accent: "#2dd4bf",
+    bullets: [
+      "If you build in AI, education, admissions, student tools, or personal systems — connect.",
+      "The contact area should feel like opening the door from the room to the outside world.",
+      "Links: GitHub, email, Telegram/LinkedIn when ready, project demos, and Mycelium updates.",
     ],
   },
-  languages: {
-    title: "Languages",
-    kicker: "International identity",
-    accent: "from-violet-300 to-amber-200",
-    body: [
-      "Russian — C2 / native cultural knowledge.",
-      "Greek — C2 / native-level daily and academic environment.",
-      "English — C1 / advanced working proficiency.",
-      "German — A1 / currently learning toward B1.",
-    ],
-  },
-  books: {
-    title: "Favorite Books",
-    kicker: "Thinking patterns",
-    accent: "from-orange-200 to-pink-300",
-    body: [
-      "Atomic Habits, Deep Work, Thinking Fast and Slow, Sapiens, The 5 AM Club.",
-      "Later each book can open notes, quotes, and personal lessons.",
-    ],
-  },
-  certificates: {
-    title: "Certificates",
-    kicker: "Achievement archive",
-    accent: "from-yellow-200 to-amber-400",
-    body: [
-      "Academic achievements, online courses, certifications, competitions, and future accomplishments.",
-      "Each certificate will have a direct verification link.",
-    ],
-  },
-  basketball: {
-    title: "Basketball",
-    kicker: "Discipline and resilience",
-    accent: "from-orange-300 to-red-400",
-    body: [
-      "I love basketball and have played since I was 10 years old.",
-      "It taught me discipline, consistency, teamwork, resilience, and recovery mindset.",
-    ],
-  },
-  games: {
-    title: "Favorite Games",
-    kicker: "Nostalgia corner",
-    accent: "from-blue-300 to-fuchsia-300",
-    body: [
-      "FIFA, Brawl Stars, Apex Legends, GTA V, Red Dead Redemption 2, Ghost of Tsushima.",
-      "This section shows personality, taste, and memories — not just gaming flex.",
-    ],
-  },
-};
+];
 
-function PanelModal({ panel, onClose }: { panel: Panel | null; onClose: () => void }) {
+const projects = [
+  {
+    name: "Mycelium University",
+    status: "flagship",
+    text: "AI platform helping international students understand realistic university options, requirements, and admission roadmaps.",
+  },
+  {
+    name: "Kapicode Agent System",
+    status: "private OS",
+    text: "Personal AI agent workflows for planning, Obsidian, health/screen-time data, reminders, and research.",
+  },
+  {
+    name: "SAT Math Mastery",
+    status: "active",
+    text: "30-day SAT math practice system with notes, visual cards, and mastery tracking toward 1400 SAT.",
+  },
+  {
+    name: "Shifter's Room",
+    status: "portfolio",
+    text: "This website: a symbolic 2.5D room instead of a generic developer template or painful 3D model.",
+  },
+];
+
+const learning = ["SAT 1400", "IELTS 7.5", "CS50x", "German B1/B2", "Data Science", "AI Products"];
+
+function ModulePanel({ module }: { module: RoomModule }) {
   return (
-    <AnimatePresence>
-      {panel && (
-        <motion.div
-          className="fixed inset-0 z-50 grid place-items-center bg-[#050611]/70 p-4 backdrop-blur-xl"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-        >
-          <motion.article
-            className="modal-shell relative w-full max-w-2xl overflow-hidden rounded-[2rem] border border-white/20 bg-[#121426]/88 p-6 text-white shadow-2xl md:p-8"
-            initial={{ y: 42, opacity: 0, scale: 0.94, rotateX: -8 }}
-            animate={{ y: 0, opacity: 1, scale: 1, rotateX: 0 }}
-            exit={{ y: 22, opacity: 0, scale: 0.97 }}
-            transition={{ type: "spring", stiffness: 180, damping: 19 }}
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className={`absolute -right-24 -top-24 h-64 w-64 rounded-full bg-gradient-to-br ${panelContent[panel].accent} opacity-20 blur-3xl`} />
-            <button
-              aria-label="Close panel"
-              onClick={onClose}
-              className="absolute right-5 top-5 rounded-full border border-white/15 bg-white/10 p-2 text-white/70 transition hover:bg-white/20 hover:text-white"
-            >
-              <X size={18} />
-            </button>
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-amber-200/80">
-              {panelContent[panel].kicker}
+    <section id={`panel-${module.id}`} className="module-overlay">
+      <a className="module-backdrop" href="#room" aria-label="Close panel" />
+      <article className="module-panel relative w-full max-w-2xl overflow-hidden rounded-[2rem] border border-white/14 bg-[#09111f]/94 p-6 shadow-2xl md:p-8" style={{ "--panel-accent": module.accent } as React.CSSProperties}>
+        <div className="panel-glow" />
+        <a className="close-button" href="#room" aria-label="Close panel">
+          <X size={18} />
+        </a>
+        <div className="mb-6 flex items-start gap-4">
+          <div className="panel-icon">{module.icon}</div>
+          <div>
+            <p className="eyebrow">{module.object}</p>
+            <h2>{module.title}</h2>
+            <p className="mt-2 max-w-xl text-base leading-7 text-slate-300">{module.short}</p>
+          </div>
+        </div>
+        <div className="space-y-3">
+          {module.bullets.map((bullet) => (
+            <p key={bullet} className="panel-line">
+              {bullet}
             </p>
-            <h2 className={`mb-6 bg-gradient-to-r ${panelContent[panel].accent} bg-clip-text text-4xl font-black tracking-tight text-transparent md:text-6xl`}>
-              {panelContent[panel].title}
-            </h2>
-            <div className="space-y-4 text-base leading-7 text-white/80 md:text-lg">
-              {panelContent[panel].body.map((line) => (
-                <p key={line}>{line}</p>
-              ))}
-            </div>
-          </motion.article>
-        </motion.div>
-      )}
-    </AnimatePresence>
+          ))}
+        </div>
+      </article>
+    </section>
   );
 }
 
-function HoverTag({ label }: { label: string }) {
-  return <span className="hover-tag">{label}</span>;
+function Hotspot({ module, className }: { module: RoomModule; className: string }) {
+  return (
+    <a
+      className={`room-hotspot ${className}`}
+      href={`#panel-${module.id}`}
+      style={{ "--hotspot": module.accent } as React.CSSProperties}
+      aria-label={`Open ${module.title}`}
+    >
+      <span className="hotspot-pulse" />
+      <span className="hotspot-label">
+        <strong>{module.object}</strong>
+        <small>{module.short}</small>
+      </span>
+    </a>
+  );
 }
 
-function Hotspot({ className, label, onClick, children }: { className: string; label: string; onClick: () => void; children?: ReactNode }) {
+function DesktopRoom() {
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const springX = useSpring(mx, { stiffness: 70, damping: 20 });
+  const springY = useSpring(my, { stiffness: 70, damping: 20 });
+  const backX = useTransform(springX, (v) => v * 0.25);
+  const midX = useTransform(springX, (v) => v * 0.55);
+  const frontX = useTransform(springX, (v) => v * 0.9);
+  const backY = useTransform(springY, (v) => v * 0.22);
+  const midY = useTransform(springY, (v) => v * 0.48);
+  const frontY = useTransform(springY, (v) => v * 0.75);
+
+  const byId = Object.fromEntries(modules.map((item) => [item.id, item])) as Record<RoomModuleId, RoomModule>;
+
   return (
-    <button className={`${className} interactive hotspot`} onClick={onClick}>
-      <HoverTag label={label} />
-      {children}
-      <span className="ping-ring" />
-    </button>
+    <section
+      className="desktop-room-shell"
+      onMouseMove={(event) => {
+        const rect = event.currentTarget.getBoundingClientRect();
+        mx.set(((event.clientX - rect.left) / rect.width - 0.5) * 28);
+        my.set(((event.clientY - rect.top) / rect.height - 0.5) * 18);
+      }}
+      onMouseLeave={() => {
+        mx.set(0);
+        my.set(0);
+      }}
+    >
+      <div className="room-frame">
+        <motion.div className="room-layer room-back" style={{ x: backX, y: backY }}>
+          <div className="night-window">
+            <div className="city-line" />
+            <div className="moon" />
+          </div>
+          <div className="wall-map">
+            <span>TUM</span>
+            <span>Nagoya</span>
+            <span>JADS</span>
+            <span>UC3M</span>
+          </div>
+          <div className="mission-board">
+            <b>MISSION</b>
+            <span>Build Mycelium</span>
+            <span>SAT → 1400</span>
+            <span>IELTS → 7.5</span>
+          </div>
+          <div className="shelf-rail">
+            {learning.slice(0, 5).map((item) => (
+              <i key={item}>{item.split(" ")[0]}</i>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div className="room-layer room-mid" style={{ x: midX, y: midY }}>
+          <div className="desk-illustration">
+            <div className="desk-lamp"><span /></div>
+            <div className="main-monitor">
+              <div className="screen-grid" />
+              <strong>MYCELIUM</strong>
+              <small>admission roadmap engine</small>
+            </div>
+            <div className="laptop-slab" />
+            <div className="keyboard-row" />
+          </div>
+          <div className="kapicode-core">
+            <span className="core-ring" />
+            <Brain size={26} />
+          </div>
+          <div className="sports-corner">
+            <div className="ball" />
+            <div className="band" />
+            <div className="dumbbell" />
+          </div>
+          <div className="door-signal">
+            <Mail size={22} />
+            <span>OPEN SIGNAL</span>
+          </div>
+        </motion.div>
+
+        <motion.div className="room-layer room-front" style={{ x: frontX, y: frontY }}>
+          <div className="floor-perspective" />
+          <div className="rug" />
+          <div className="chair" />
+          <div className="room-caption">
+            <p>This is not a 3D model.</p>
+            <strong>It is a symbolic room interface.</strong>
+          </div>
+        </motion.div>
+
+        <Hotspot module={byId.desk} className="hotspot-desk" />
+        <Hotspot module={byId.shelf} className="hotspot-shelf" />
+        <Hotspot module={byId.map} className="hotspot-map" />
+        <Hotspot module={byId.core} className="hotspot-core" />
+        <Hotspot module={byId.sport} className="hotspot-sport" />
+        <Hotspot module={byId.window} className="hotspot-window" />
+        <Hotspot module={byId.contact} className="hotspot-contact" />
+      </div>
+    </section>
   );
 }
 
 export default function Home() {
-  const [desktopOpen, setDesktopOpen] = useState(false);
-  const [panel, setPanel] = useState<Panel | null>(null);
-
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const springX = useSpring(mx, { stiffness: 70, damping: 18 });
-  const springY = useSpring(my, { stiffness: 70, damping: 18 });
-
   return (
-    <main
-      className="relative min-h-screen overflow-hidden bg-[#070a1a] text-white"
-      onMouseMove={(event) => {
-        mx.set((event.clientX / window.innerWidth - 0.5) * 24);
-        my.set((event.clientY / window.innerHeight - 0.5) * 18);
-      }}
-    >
-      <div className="cosmic-sky" />
-      <div className="aurora aurora-one" />
-      <div className="aurora aurora-two" />
-      <div className="sun-core" />
-      <div className="cloudscape cloudscape-back" />
-      <div className="cloudscape cloudscape-front" />
-      <div className="stars" />
-      <div className="dust-field" />
+    <main className="site-shell text-white">
+      <div className="ambient-grid" />
+      <div className="ambient-light ambient-a" />
+      <div className="ambient-light ambient-b" />
+      {modules.map((module) => (
+        <ModulePanel key={module.id} module={module} />
+      ))}
 
-      <section className="relative z-10 mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 py-5 md:px-8">
-        <header className="top-glass flex items-center justify-between rounded-full px-4 py-3 shadow-xl">
+      <header className="site-nav">
+        <a href="#room" className="brand-mark">
+          <span>SR</span>
           <div>
-            <p className="text-xs uppercase tracking-[0.36em] text-white/58">Pavel&apos;s Room</p>
-            <h1 className="text-lg font-black md:text-2xl">Interactive Floating World</h1>
+            <strong>Shifter&apos;s Room</strong>
+            <small>Pavel Tagiev</small>
           </div>
-          <div className="hidden items-center gap-2 rounded-full border border-emerald-200/20 bg-emerald-400/12 px-4 py-2 text-sm text-emerald-100 md:flex">
-            <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-300 shadow-[0_0_16px_#6ee7b7]" /> Building my future
+        </a>
+        <nav>
+          <a href="#projects">Projects</a>
+          <a href="#system">System</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </header>
+
+      <section id="room" className="hero-section">
+        <div className="hero-copy">
+          <p className="eyebrow">18 · Germany · AI × education × discipline</p>
+          <h1>
+            Enter my room. <span>Every object is a part of the system I am building.</span>
+          </h1>
+          <p className="hero-lead">
+            I’m Pavel “Shifter” Tagiev — building Mycelium University, preparing for global universities, and using AI agents to turn ambition into routines, projects, and proof.
+          </p>
+          <div className="hero-actions">
+            <a href="#projects">View proof of work <ArrowUpRight size={18} /></a>
+            <a href="#panel-core">Open Kapicode Core <Sparkles size={18} /></a>
           </div>
-        </header>
-
-        <div className="grid flex-1 items-center gap-6 py-7 lg:grid-cols-[250px_1fr_250px]">
-          <aside className="space-y-3">
-            {[
-              ["Welcome", "timeline"],
-              ["Projects", "projects"],
-              ["Skills", "skills"],
-              ["Goals", "goals"],
-            ].map(([item, target], index) => (
-              <button
-                key={item}
-                className="glass-button group w-full text-left"
-                onClick={() => setPanel(target as Panel)}
-              >
-                <span className="text-white/45">0{index + 1}</span>
-                <strong>{item}</strong>
-                <Sparkles className="ml-auto h-4 w-4 opacity-0 transition group-hover:opacity-100" />
-              </button>
-            ))}
-          </aside>
-
-          <motion.div
-            className="room-stage"
-            style={{ rotateY: springX, rotateX: springY }}
-          >
-            <div className="island-shadow" />
-            <div className="floating-island">
-              <div className="island-rim" />
-              <div className="room-shell">
-                <div className="back-wall">
-                  <div className="window mega-window left-window"><span /></div>
-                  <div className="window mega-window right-window"><span /></div>
-                  <div className="led-strip" />
-                  <div className="poster-card poster-one">AI</div>
-                  <div className="poster-card poster-two">MVP</div>
-                </div>
-                <div className="floor-grid" />
-
-                <Hotspot className="language-shelf" label="Language Shelf" onClick={() => setPanel("languages")}>
-                  {[
-                    ["RU", "C2"],
-                    ["GR", "C2"],
-                    ["EN", "C1"],
-                    ["DE", "A1"],
-                  ].map(([lang, level]) => (
-                    <span key={lang} title={`${lang} — ${level}`}>
-                      <b>{lang}</b>
-                      <small>{level}</small>
-                    </span>
-                  ))}
-                </Hotspot>
-
-                <Hotspot className="certificate" label="Certificates" onClick={() => setPanel("certificates")}>
-                  <Trophy size={28} />
-                </Hotspot>
-
-                <div className="desk">
-                  <Hotspot className="monitor" label="Computer" onClick={() => setDesktopOpen(true)}>
-                    <div className="screen-noise" />
-                    <div className="screen-glow">
-                      <Code2 size={38} />
-                      <p>SHIFTER OS</p>
-                      <small>click to enter</small>
-                    </div>
-                  </Hotspot>
-                  <div className="monitor-stand" />
-                  <div className="keyboard"><i /><i /><i /></div>
-                  <div className="mouse" />
-                  <div className="desk-lamp"><span /></div>
-                </div>
-
-                <Hotspot className="ps4" label="PS4" onClick={() => setPanel("games")}>
-                  <Gamepad2 size={30} />
-                </Hotspot>
-
-                <div className="bed">
-                  <div className="blanket-wave" />
-                  <Hotspot className="capicode" label="Agent Capicode" onClick={() => setPanel("capicode")}>
-                    <span className="zzz z1">Z</span>
-                    <span className="zzz z2">z</span>
-                    <span className="zzz z3">z</span>
-                    <span className="bubble" />
-                    <span className="capy-ear" />
-                    <span className="capy-head" />
-                    <span className="capy-body" />
-                    <span className="capy-face" />
-                  </Hotspot>
-                </div>
-
-                <Hotspot className="basketball" label="Basketball" onClick={() => setPanel("basketball")} />
-                <button className="book-note interactive" onClick={() => setPanel("books")}>Favorite Books</button>
-                <div className="plant plant-left" />
-                <div className="plant plant-right" />
-                <div className="mini-rug" />
-              </div>
-            </div>
-          </motion.div>
-
-          <aside className="space-y-3">
-            <div className="status-card">
-              <Sparkles className="text-amber-200" />
-              <p>Location</p>
-              <strong>Somewhere above Heilbronn clouds</strong>
-            </div>
-            <div className="status-card">
-              <Brain className="text-cyan-200" />
-              <p>Identity</p>
-              <strong>Builder · Student · Future Founder · AI Enthusiast</strong>
-            </div>
-            <div className="status-card hidden md:block">
-              <MoonStar className="text-violet-200" />
-              <p>Hint</p>
-              <strong>Hover objects. Click the computer, capybara, shelf, ball, PS4.</strong>
-            </div>
-          </aside>
         </div>
 
-        <footer className="grid gap-4 pb-3 md:grid-cols-[1fr_auto_1fr] md:items-center">
-          <div className="intro-card">
-            <p>Hi, I&apos;m Pavel</p>
-            <strong>18 y/o international builder creating AI products for students.</strong>
+        <div className="desktop-only">
+          <DesktopRoom />
+        </div>
+
+        <div className="mobile-room-card">
+          <div className="mobile-room-visual">
+            <div className="mini-window" />
+            <div className="mini-monitor" />
+            <div className="mini-shelf" />
+            <div className="mini-orb" />
           </div>
-          <nav className="dock">
-            {[
-              ["Home", <CircleUserRound key="home" />, "timeline"],
-              ["Code", <Code2 key="code" />, "skills"],
-              ["Profile", <GraduationCap key="profile" />, "experience"],
-              ["Goals", <Goal key="goals" />, "goals"],
-              ["Contact", <Mail key="mail" />, "contact"],
-            ].map(([label, icon, target]) => (
-              <button key={label as string} onClick={() => setPanel(target as Panel)}>
-                {icon}
-                <span>{label as string}</span>
-              </button>
-            ))}
-          </nav>
-          <div className="intro-card md:text-right">
-            <p>Status</p>
-            <strong>Learning, shipping, and building my future.</strong>
-          </div>
-        </footer>
+          <p className="eyebrow">Mobile room index</p>
+          <h2>Shifter’s Room</h2>
+          <p>Tap a module. Mobile is designed like a native personal dashboard, not a squeezed desktop scene.</p>
+        </div>
       </section>
 
-      <AnimatePresence>
-        {desktopOpen && (
-          <motion.section
-            className="fixed inset-0 z-40 bg-[#050611]/82 p-4 backdrop-blur-2xl md:p-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div
-              className="desktop-window mx-auto h-full max-w-6xl overflow-hidden rounded-[2rem] border border-white/20 bg-[#0d1328]/92 shadow-2xl"
-              initial={{ scale: 0.82, y: 50, rotateX: -8 }}
-              animate={{ scale: 1, y: 0, rotateX: 0 }}
-              exit={{ scale: 0.94, y: 20 }}
-              transition={{ type: "spring", stiffness: 155, damping: 18 }}
-            >
-              <div className="desktop-wallpaper" />
-              <div className="desktop-topbar">
-                <div className="flex gap-2"><span /><span /><span /></div>
-                <strong>Shifter OS</strong>
-                <button onClick={() => setDesktopOpen(false)}>Close</button>
-              </div>
-              <div className="desktop-grid">
-                <div className="desktop-icons">
-                  {[...socialIcons, ...desktopFolders].map((item, index) => (
-                    <motion.button
-                      key={item.label}
-                      initial={{ y: 18, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: index * 0.035 }}
-                      onClick={() => ("id" in item ? setPanel(item.id) : window.open(item.href, "_blank"))}
-                      className="desktop-icon"
-                    >
-                      {item.icon}
-                      <span>{item.label}</span>
-                    </motion.button>
-                  ))}
-                </div>
-                <div className="desktop-note">
-                  <BookOpen className="text-amber-200" />
-                  <h2>Pavel&apos;s Digital Brain</h2>
-                  <p>
-                    This computer is the portal into projects, skills, experience, timeline,
-                    goals, and contact links — designed like a personal operating system.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          </motion.section>
-        )}
-      </AnimatePresence>
+      <section className="mobile-index" aria-label="Room modules">
+        {modules.map((module, index) => (
+        <a key={module.id} href={`#panel-${module.id}`} style={{ "--module": module.accent } as React.CSSProperties}>
+          <span>{String(index + 1).padStart(2, "0")}</span>
+          <div>{module.icon}</div>
+          <strong>{module.object}</strong>
+          <small>{module.short}</small>
+        </a>
+        ))}
+      </section>
 
-      <PanelModal panel={panel} onClose={() => setPanel(null)} />
+      <section id="projects" className="content-section">
+        <div className="section-heading">
+          <p className="eyebrow">Desk / proof of work</p>
+          <h2>Projects that make the room real.</h2>
+          <p>Not decorative portfolio cards — each project is a system I’m building or using.</p>
+        </div>
+        <div className="project-grid">
+          {projects.map((project) => (
+            <article key={project.name}>
+              <div className="project-status">{project.status}</div>
+              <h3>{project.name}</h3>
+              <p>{project.text}</p>
+              <a href="#contact">Request link <ExternalLink size={16} /></a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="system" className="system-section">
+        <div className="system-card wide">
+          <p className="eyebrow">Kapicode Core</p>
+          <h2>My personal operating system is part of the story.</h2>
+          <p>
+            Obsidian, AI agents, health data, screen-time tracking, SAT/IELTS planning, and Mycelium research are connected into one loop: plan → execute → measure → improve.
+          </p>
+        </div>
+        <div className="system-card">
+          <Activity />
+          <strong>Daily telemetry</strong>
+          <span>sleep, steps, screen time, routines</span>
+        </div>
+        <div className="system-card">
+          <Target />
+          <strong>Admission roadmap</strong>
+          <span>SAT, IELTS, CS50x, universities</span>
+        </div>
+        <div className="system-card">
+          <FolderKanban />
+          <strong>Builder pipeline</strong>
+          <span>ideas → MVP → proof → community</span>
+        </div>
+      </section>
+
+      <section className="learning-strip" aria-label="Learning targets">
+        {learning.map((item) => (
+          <span key={item}>{item}</span>
+        ))}
+      </section>
+
+      <section id="contact" className="contact-section">
+        <div>
+          <p className="eyebrow">Door / signal</p>
+          <h2>Building in AI, education, or student systems?</h2>
+          <p>Let’s connect. This room is the public entrance to the work behind it.</p>
+        </div>
+        <div className="contact-actions">
+          <a href="mailto:hello@shifter.dev"><Mail size={18} /> Email</a>
+          <a href="#"><MessageCircle size={18} /> Telegram / socials soon</a>
+          <a href="#"><Code2 size={18} /> GitHub soon</a>
+        </div>
+      </section>
+
     </main>
   );
 }
