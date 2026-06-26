@@ -345,7 +345,7 @@ button { font: inherit; }
 
 .path-map {
   position:relative;
-  min-height: 32rem;
+  min-height: 38rem;
   margin-top: 4rem;
   border: 1px solid rgba(20,20,20,.09);
   border-radius: 2rem;
@@ -359,7 +359,7 @@ button { font: inherit; }
   --angle: calc(var(--i) * 60deg);
   position:absolute;
   left:50%; top:50%;
-  transform: rotate(var(--angle)) translateX(clamp(8rem, 21vw, 23rem)) rotate(calc(var(--angle) * -1));
+  transform: rotate(var(--angle)) translateX(clamp(7rem, 17vw, 18.5rem)) rotate(calc(var(--angle) * -1));
   transform-origin:left center;
   border:1px solid rgba(20,20,20,.12);
   border-radius:999px;
