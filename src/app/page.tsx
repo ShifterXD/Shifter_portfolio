@@ -221,6 +221,37 @@ function Hotspot({ module, className }: { module: RoomModule; className: string 
   );
 }
 
+function HeroArtifact() {
+  return (
+    <motion.aside
+      className="hero-artifact desktop-hero-artifact"
+      initial={{ opacity: 0, y: 28, rotateX: 8 }}
+      animate={{ opacity: 1, y: 0, rotateX: 0 }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      aria-label="Cinematic preview of Shifter's Room"
+    >
+      <div className="artifact-frame">
+        <div className="artifact-room-preview" />
+        <div className="artifact-fog" />
+        <div className="artifact-orb" />
+        <div className="artifact-panel artifact-panel-left">
+          <span>MYCELIUM</span>
+          <strong>student clarity system</strong>
+        </div>
+        <div className="artifact-panel artifact-panel-right">
+          <span>ROOM / 01</span>
+          <strong>proof, not decoration</strong>
+        </div>
+        <div className="artifact-status">
+          <i />
+          <span>Building Mycelium University</span>
+        </div>
+      </div>
+      <p className="artifact-caption">A cinematic room metaphor — built with layered 2.5D visuals instead of expensive real-time 3D.</p>
+    </motion.aside>
+  );
+}
+
 function DesktopRoom() {
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -311,6 +342,8 @@ export default function Home() {
             <a href="#story">Read the 2-minute story <Sparkles size={18} /></a>
           </div>
         </div>
+
+        <HeroArtifact />
 
         <div className="mobile-room-card">
           <div className="mobile-cosmos-card" aria-hidden="true">

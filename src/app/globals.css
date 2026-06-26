@@ -18,7 +18,7 @@ body {
   margin: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; }
@@ -170,12 +170,131 @@ button { font: inherit; }
 
 .hero-intro {
   min-height: 100svh;
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: minmax(0, .86fr) minmax(26rem, 1fr);
   align-content: center;
-  padding-bottom: 8rem;
+  padding-bottom: 6rem;
 }
 .hero-intro .hero-copy { max-width: 54rem; }
-.hero-intro .hero-copy h1 { max-width: 12ch; }
+.hero-intro .hero-copy h1 { max-width: 12ch; font-size: clamp(3.1rem, 6vw, 5.8rem); }
+.hero-artifact {
+  position: relative;
+  justify-self: end;
+  width: min(100%, 42rem);
+  perspective: 1200px;
+}
+.artifact-frame {
+  position: relative;
+  min-height: 35rem;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 2.2rem;
+  background: rgba(2, 6, 17, .72);
+  box-shadow:
+    0 42px 140px rgba(0,0,0,.58),
+    0 0 100px rgba(56,189,248,.13),
+    inset 0 1px 0 rgba(255,255,255,.14);
+  transform: rotateX(3deg) rotateY(-5deg);
+  transform-style: preserve-3d;
+  isolation: isolate;
+}
+.artifact-frame::before {
+  content:"";
+  position:absolute;
+  inset:.72rem;
+  z-index:8;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:1.65rem;
+  pointer-events:none;
+}
+.artifact-frame::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:7;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 68% 44%, transparent 0 28%, rgba(2,6,17,.18) 54%, rgba(2,6,17,.82) 100%),
+    linear-gradient(90deg, rgba(2,6,17,.58), transparent 42%),
+    linear-gradient(180deg, rgba(255,255,255,.07), transparent 20%, rgba(0,0,0,.42));
+}
+.artifact-room-preview {
+  position:absolute;
+  inset:-1.5rem;
+  z-index:1;
+  background-image:
+    url("/Shifter_portfolio/assets/shifter-room-bg.png"),
+    url("/assets/shifter-room-bg.png");
+  background-size: cover;
+  background-position: 62% center;
+  filter: saturate(1.08) contrast(1.04);
+  animation: artifactFloat 8s ease-in-out infinite;
+}
+.artifact-fog {
+  position:absolute;
+  inset:0;
+  z-index:5;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse at 22% 62%, rgba(148,163,184,.16), transparent 22rem),
+    linear-gradient(115deg, rgba(255,255,255,.12), transparent 18% 72%, rgba(125,211,252,.08));
+  mix-blend-mode: screen;
+  opacity:.7;
+}
+.artifact-orb {
+  position:absolute;
+  right: 14%;
+  top: 41%;
+  z-index:9;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 999px;
+  border:1px solid rgba(125,211,252,.7);
+  background: radial-gradient(circle, rgba(125,211,252,.32), rgba(37,99,235,.05) 62%, transparent 70%);
+  box-shadow:0 0 46px rgba(56,189,248,.35), inset 0 0 34px rgba(255,255,255,.08);
+  animation: cosmicPulse 3.6s ease-in-out infinite;
+}
+.artifact-panel {
+  position:absolute;
+  z-index:10;
+  max-width: 13rem;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius: 1.05rem;
+  background: rgba(3,7,18,.58);
+  padding:.82rem .9rem;
+  box-shadow:0 18px 70px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.12);
+  backdrop-filter: blur(18px);
+}
+.artifact-panel span {
+  display:block;
+  color:#fcd34d;
+  font-family:var(--font-geist-mono),monospace;
+  font-size:.66rem;
+  font-weight:950;
+  letter-spacing:.18em;
+}
+.artifact-panel strong { display:block; margin-top:.28rem; color:#f8fafc; font-size:.92rem; line-height:1.15; }
+.artifact-panel-left { left:1.5rem; top:1.6rem; }
+.artifact-panel-right { right:1.5rem; bottom:5.7rem; }
+.artifact-status {
+  position:absolute;
+  left:1.5rem;
+  right:1.5rem;
+  bottom:1.4rem;
+  z-index:10;
+  display:flex;
+  align-items:center;
+  gap:.65rem;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:999px;
+  background: rgba(2,6,17,.62);
+  padding:.78rem .95rem;
+  color:#dbeafe;
+  font-weight:800;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.1);
+  backdrop-filter: blur(16px);
+}
+.artifact-status i { width:.62rem; height:.62rem; border-radius:999px; background:#22c55e; box-shadow:0 0 22px #22c55e; }
+.artifact-caption { margin:1rem auto 0; max-width: 30rem; color:#93a4bb; font-size:.92rem; line-height:1.55; text-align:center; }
 .room-showcase-section {
   position: relative;
   z-index: 1;
@@ -527,6 +646,9 @@ button { font: inherit; }
 
 @media (max-width: 1100px) {
   .hero-section { grid-template-columns: 1fr; }
+  .hero-intro { grid-template-columns: 1fr; }
+  .hero-artifact { justify-self: stretch; width: 100%; }
+  .artifact-frame { min-height: 28rem; transform: none; }
   .hero-copy h1 { max-width: 12ch; }
   .project-grid,.story-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .system-section { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -572,7 +694,7 @@ button { font: inherit; }
   .hero-lead { font-size:.98rem; line-height:1.65; color:#d8e7ff; }
   .hero-actions { display:grid; }
   .hero-actions a, .hero-actions button { justify-content:center; width:100%; border-color:rgba(125,211,252,.2); background:linear-gradient(135deg, rgba(56,189,248,.16), rgba(167,139,250,.08)); box-shadow:0 0 24px rgba(56,189,248,.09), inset 0 1px 0 rgba(255,255,255,.09); }
-  .desktop-only { display:none; }
+  .desktop-only, .desktop-hero-artifact { display:none; }
   .mobile-room-card { position:relative; display:block; overflow:hidden; border:1px solid rgba(125,211,252,.18); border-radius:1.55rem; background:linear-gradient(145deg, rgba(4,12,28,.72), rgba(7,12,28,.46)); padding:1rem; box-shadow:0 24px 80px rgba(0,0,0,.42), 0 0 44px rgba(56,189,248,.11), inset 0 1px 0 rgba(255,255,255,.1); backdrop-filter:blur(18px); animation:floatCard 5.4s ease-in-out infinite; }
   .mobile-room-card::before { content:""; position:absolute; inset:0; background:linear-gradient(110deg, transparent 0 34%, rgba(255,255,255,.12) 45%, transparent 58%); transform:translateX(-130%); animation:cardSweep 6s ease-in-out infinite 1.1s; pointer-events:none; }
   .mobile-cosmos-card { position:relative; height:12.4rem; overflow:hidden; border:1px solid rgba(255,255,255,.1); border-radius:1.15rem; background:
@@ -628,6 +750,7 @@ button { font: inherit; }
 @keyframes cardSweep { 0%, 46% { transform:translateX(-130%); } 64%, 100% { transform:translateX(130%); } }
 @keyframes cosmicPulse { 0%,100% { transform:scale(1); filter:saturate(1); } 50% { transform:scale(1.08); filter:saturate(1.35); } }
 @keyframes nodeFloat { 0%,100% { transform:translate3d(0,0,0); } 50% { transform:translate3d(.45rem,-.7rem,0); } }
+@keyframes artifactFloat { 0%,100% { transform:translate3d(0,0,0) scale(1.02); } 50% { transform:translate3d(-.55rem,.35rem,0) scale(1.035); } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
