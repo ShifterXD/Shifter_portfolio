@@ -249,22 +249,7 @@ function DesktopRoom() {
       <div className="room-frame generated-room-frame">
         <motion.div className="generated-room-art" style={{ x: artX, y: artY }} />
         <div className="room-vignette" />
-        <motion.div className="room-interface-layer" style={{ x: overlayX, y: overlayY }}>
-          <div className="interface-chip chip-mission">
-            <span>LIVE ROOM</span>
-            <strong>Mycelium build space</strong>
-          </div>
-          <div className="interface-chip chip-pathway">
-            <span>PATHWAY</span>
-            <strong>AI admissions map</strong>
-          </div>
-          <div className="interface-line line-desk" />
-          <div className="interface-line line-core" />
-          <div className="room-caption generated-caption">
-            <p>Not a cheap template.</p>
-            <strong>A cinematic room interface for the work.</strong>
-          </div>
-        </motion.div>
+        <motion.div className="room-interface-layer" style={{ x: overlayX, y: overlayY }} aria-hidden="true" />
 
         <Hotspot module={byId.window} className="hotspot-window" />
         <Hotspot module={byId.map} className="hotspot-map" />
@@ -312,7 +297,7 @@ export default function Home() {
         </nav>
       </header>
 
-      <section id="room" className="hero-section">
+      <section id="room" className="hero-section hero-intro">
         <div className="hero-copy">
           <p className="eyebrow">18 · Germany · AI × education × systems</p>
           <h1>
@@ -322,13 +307,9 @@ export default function Home() {
             I’m Pavel “Shifter” Tagiev — an international student in Germany building Mycelium University: a clearer way for students to understand university fit, requirements, and their next steps.
           </p>
           <div className="hero-actions">
-            <a href="#story">Read the 2-minute story <ArrowUpRight size={18} /></a>
-            <a href="#projects">View proof of work <Sparkles size={18} /></a>
+            <a href="#room-interface">Enter the room <ArrowUpRight size={18} /></a>
+            <a href="#story">Read the 2-minute story <Sparkles size={18} /></a>
           </div>
-        </div>
-
-        <div className="desktop-only">
-          <DesktopRoom />
         </div>
 
         <div className="mobile-room-card">
@@ -344,6 +325,15 @@ export default function Home() {
           <h2>A focused room, seen from orbit.</h2>
           <p>The mobile version turns the room into a night-sky signal: one student, one direction, and a system built to make education clearer.</p>
         </div>
+      </section>
+
+      <section id="room-interface" className="room-showcase-section desktop-only" aria-label="Interactive room interface">
+        <div className="room-showcase-heading">
+          <p className="eyebrow">Interactive room</p>
+          <h2>Hover the objects.</h2>
+          <p>No dots, no wires — just the room. The objects reveal meaning when someone explores.</p>
+        </div>
+        <DesktopRoom />
       </section>
 
       <section id="story" className="story-section" aria-label="Two minute story">
