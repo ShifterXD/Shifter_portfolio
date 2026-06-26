@@ -1,453 +1,214 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import {
-  Activity,
-  ArrowUpRight,
-  BookOpen,
-  Brain,
-  Code2,
-  Dumbbell,
-  ExternalLink,
-  FolderKanban,
-  Mail,
-  Map,
-  MessageCircle,
-  Monitor,
-  MoonStar,
-  Sparkles,
-  Target,
-  X,
-} from "lucide-react";
-import type { ReactNode } from "react";
+import { motion } from "framer-motion";
+import { ArrowUpRight, Code2, Mail, Mouse, Share2 } from "lucide-react";
 
-type RoomModuleId = "desk" | "shelf" | "map" | "core" | "sport" | "window" | "contact";
+const navItems = [
+  ["Home", "#home"],
+  ["Work", "#work"],
+  ["System", "#system"],
+  ["Path", "#path"],
+  ["Contact", "#contact"],
+];
 
-type RoomModule = {
-  id: RoomModuleId;
-  object: string;
-  title: string;
-  short: string;
-  icon: ReactNode;
-  accent: string;
-  bullets: string[];
-};
-
-const modules: RoomModule[] = [
+const workCards = [
   {
-    id: "desk",
-    object: "Desk / Monitor",
-    title: "Projects Desk",
-    short: "AI products and proof of work.",
-    icon: <Monitor />,
-    accent: "#38bdf8",
-    bullets: [
-      "Mycelium University — an AI platform for international students who need realistic admission roadmaps.",
-      "This portfolio is part of the proof: a custom interface, not a recycled template.",
-      "Principle: every project should explain the problem, the system, and the evidence.",
-    ],
+    title: "Mycelium University",
+    label: "admission clarity",
+    text: "AI platform for international students: profile analysis, realistic university fit, requirements, and next-step roadmaps.",
+    shape: "orb-ring",
   },
   {
-    id: "shelf",
-    object: "Bookshelf",
-    title: "Learning Shelf",
-    short: "Academic path and technical growth.",
-    icon: <BookOpen />,
-    accent: "#f59e0b",
-    bullets: [
-      "Preparing for English-taught international programs through SAT, IELTS, CS50x, and applied projects.",
-      "Learning direction: data science, AI products, business analytics, and economics/management.",
-      "The goal is not collecting badges — it is building enough skill to solve real student problems.",
-    ],
+    title: "Kapicode System",
+    label: "agent workflow",
+    text: "A personal AI operating layer for research, planning, coding, notes, and execution without losing the human direction.",
+    shape: "orb-triangle",
   },
   {
-    id: "map",
-    object: "Wall Map",
-    title: "University Roadmap",
-    short: "From Germany to global programs.",
-    icon: <Map />,
-    accent: "#a78bfa",
-    bullets: [
-      "Exploring realistic English-taught programs in Europe and Asia, including TUM Heilbronn, Nagoya G30, JADS, and UC3M.",
-      "The research focuses on fit, requirements, fees, outcomes, and execution — not prestige fantasy.",
-      "Mycelium University comes from this need: students deserve clarity before they commit years of effort.",
-    ],
-  },
-  {
-    id: "core",
-    object: "Kapicode Core",
-    title: "AI Agent System",
-    short: "A practical layer for research and building.",
-    icon: <Brain />,
-    accent: "#22c55e",
-    bullets: [
-      "Kapicode is my AI workflow layer for research, planning, coding, notes, and project execution.",
-      "The room shows the idea visually: tools are connected into one operating environment.",
-      "AI is presented as leverage for disciplined work — not as decoration or a buzzword.",
-    ],
-  },
-  {
-    id: "sport",
-    object: "Discipline Corner",
-    title: "Discipline Corner",
-    short: "Consistency beyond the screen.",
-    icon: <Dumbbell />,
-    accent: "#fb7185",
-    bullets: [
-      "The corner represents discipline, recovery, and long-term consistency — the human side of building.",
-      "It keeps the site grounded: ambition is not only technical, it is behavioral.",
-      "For a professional audience, it signals resilience without turning the portfolio into a diary.",
-    ],
-  },
-  {
-    id: "window",
-    object: "Window",
-    title: "Outside World",
-    short: "A room aimed outward.",
-    icon: <MoonStar />,
-    accent: "#60a5fa",
-    bullets: [
-      "The window stands for the transition from local student life to international study, collaboration, and independence.",
-      "The room is calm and focused, but the direction is outward: universities, teams, users, and real-world impact.",
-      "The visual mood is night focus, warm light, and a future that feels reachable rather than exaggerated.",
-    ],
-  },
-  {
-    id: "contact",
-    object: "Door / Signal",
-    title: "Contact Signal",
-    short: "For universities, builders, and future collaborators.",
-    icon: <Mail />,
-    accent: "#2dd4bf",
-    bullets: [
-      "This site is designed for people who want to understand who I am, what I build, and why it matters.",
-      "If the work connects to AI, education, admissions, or student systems, I am open to conversations.",
-      "Public links are intentionally focused: GitHub is live, private demos and direct contact are shared on request.",
-    ],
+    title: "SAT Math Mastery",
+    label: "learning proof",
+    text: "A structured study project that turns preparation into visible systems: practice, visual cards, tracking, and iteration.",
+    shape: "orb-diamond",
   },
 ];
 
-const projects = [
-  {
-    name: "Mycelium University",
-    status: "flagship",
-    text: "AI platform for international students: profile analysis, realistic university fit, requirements, and admission roadmaps.",
-  },
-  {
-    name: "Kapicode Agent System",
-    status: "AI workflow",
-    text: "A practical agent layer for research, planning, coding, notes, and execution — built to increase output quality.",
-  },
-  {
-    name: "SAT Math Mastery",
-    status: "learning system",
-    text: "Structured SAT preparation with practice, visual notes, and progress tracking toward stronger quantitative readiness.",
-  },
-  {
-    name: "Shifter's Room",
-    status: "portfolio",
-    text: "This website: a custom symbolic room interface built to communicate identity without a generic template or heavy 3D model.",
-  },
-];
+const pathItems = ["Germany", "AI education", "Data science", "Admissions", "English-taught programs", "Builder portfolio"];
 
-const storySteps = [
-  {
-    label: "01 · who",
-    title: "I’m Pavel Tagiev — Shifter.",
-    text: "An 18-year-old student in Germany building at the intersection of AI, international education, and personal systems.",
-  },
-  {
-    label: "02 · problem",
-    title: "The problem I keep seeing: unclear paths.",
-    text: "Students often face vague university lists, confusing requirements, and unrealistic plans. I want to make that path clearer.",
-  },
-  {
-    label: "03 · build",
-    title: "So I’m building Mycelium University.",
-    text: "An AI platform that helps international students understand fit, requirements, and the next actions they should take.",
-  },
-  {
-    label: "04 · proof",
-    title: "This room is the interface to the work.",
-    text: "The desk, shelf, map, and AI core are not decoration — they show the systems behind my projects, learning, and direction.",
-  },
-];
+function NeuralCore() {
+  const nodes = [
+    [50, 14], [69, 20], [82, 38], [78, 62], [62, 79], [39, 78], [20, 63], [15, 40], [31, 22],
+    [51, 39], [62, 50], [43, 57], [35, 43], [56, 64], [70, 36], [27, 61],
+  ];
+  const lines = [
+    [0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,0],
+    [8,9],[9,10],[10,14],[10,11],[11,12],[12,15],[11,13],[13,4],[15,6],[14,2],[9,13],[12,8],[5,11],
+  ];
 
-const learning = ["SAT", "IELTS", "CS50x", "Data Science", "AI Products", "Global Education"];
-
-function ModulePanel({ module }: { module: RoomModule }) {
   return (
-    <section id={`panel-${module.id}`} className="module-overlay">
-      <a className="module-backdrop" href="#room" aria-label="Close panel" />
-      <article className="module-panel relative w-full max-w-2xl overflow-hidden rounded-[2rem] border border-white/14 bg-[#09111f]/94 p-6 shadow-2xl md:p-8" style={{ "--panel-accent": module.accent } as React.CSSProperties}>
-        <div className="panel-glow" />
-        <a className="close-button" href="#room" aria-label="Close panel">
-          <X size={18} />
-        </a>
-        <div className="mb-6 flex items-start gap-4">
-          <div className="panel-icon">{module.icon}</div>
-          <div>
-            <p className="eyebrow">{module.object}</p>
-            <h2>{module.title}</h2>
-            <p className="mt-2 max-w-xl text-base leading-7 text-slate-300">{module.short}</p>
-          </div>
-        </div>
-        <div className="space-y-3">
-          {module.bullets.map((bullet) => (
-            <p key={bullet} className="panel-line">
-              {bullet}
-            </p>
-          ))}
-        </div>
-      </article>
-    </section>
-  );
-}
-
-function Hotspot({ module, className }: { module: RoomModule; className: string }) {
-  return (
-    <a
-      className={`room-hotspot ${className}`}
-      href={`#panel-${module.id}`}
-      style={{ "--hotspot": module.accent } as React.CSSProperties}
-      aria-label={`Open ${module.title}`}
+    <motion.div
+      className="neural-core"
+      initial={{ opacity: 0, scale: 0.92, rotate: -8 }}
+      animate={{ opacity: 1, scale: 1, rotate: 0 }}
+      transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+      aria-hidden="true"
     >
-      <span className="hotspot-pulse" />
-      <span className="hotspot-label">
-        <strong>{module.object}</strong>
-        <small>{module.short}</small>
-      </span>
-    </a>
-  );
-}
-
-function HeroArtifact() {
-  return (
-    <motion.aside
-      className="hero-artifact desktop-hero-artifact"
-      initial={{ opacity: 0, y: 28, rotateX: 8 }}
-      animate={{ opacity: 1, y: 0, rotateX: 0 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      aria-label="Cinematic preview of Shifter's Room"
-    >
-      <div className="artifact-frame">
-        <div className="artifact-room-preview" />
-        <div className="artifact-fog" />
-        <div className="artifact-orb" />
-        <div className="artifact-panel artifact-panel-left">
-          <span>MYCELIUM</span>
-          <strong>student clarity system</strong>
-        </div>
-        <div className="artifact-panel artifact-panel-right">
-          <span>ROOM / 01</span>
-          <strong>proof, not decoration</strong>
-        </div>
-        <div className="artifact-status">
-          <i />
-          <span>Building Mycelium University</span>
-        </div>
+      <span className="core-halo halo-one" />
+      <span className="core-halo halo-two" />
+      <svg viewBox="0 0 100 100" className="mesh-svg">
+        <defs>
+          <filter id="soft-glow">
+            <feGaussianBlur stdDeviation="1.35" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+        {lines.map(([a, b], index) => (
+          <line
+            key={`${a}-${b}-${index}`}
+            x1={nodes[a][0]}
+            y1={nodes[a][1]}
+            x2={nodes[b][0]}
+            y2={nodes[b][1]}
+            className={index % 4 === 0 ? "mesh-line line-warm" : "mesh-line"}
+          />
+        ))}
+        {nodes.map(([x, y], index) => (
+          <circle key={`${x}-${y}`} cx={x} cy={y} r={index % 5 === 0 ? 1.6 : 0.95} className={index % 4 === 0 ? "mesh-node node-warm" : "mesh-node"} />
+        ))}
+      </svg>
+      <div className="core-fire">
+        <span />
+        <span />
+        <span />
       </div>
-      <p className="artifact-caption">A cinematic room metaphor — built with layered 2.5D visuals instead of expensive real-time 3D.</p>
-    </motion.aside>
+    </motion.div>
   );
 }
 
-function DesktopRoom() {
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const springX = useSpring(mx, { stiffness: 70, damping: 20 });
-  const springY = useSpring(my, { stiffness: 70, damping: 20 });
-  const artX = useTransform(springX, (v) => v * 0.42);
-  const artY = useTransform(springY, (v) => v * 0.28);
-  const overlayX = useTransform(springX, (v) => v * 0.85);
-  const overlayY = useTransform(springY, (v) => v * 0.6);
-
-  const byId = Object.fromEntries(modules.map((item) => [item.id, item])) as Record<RoomModuleId, RoomModule>;
-
+function ServiceOrb({ kind }: { kind: string }) {
   return (
-    <section
-      className="desktop-room-shell"
-      onMouseMove={(event) => {
-        const rect = event.currentTarget.getBoundingClientRect();
-        mx.set(((event.clientX - rect.left) / rect.width - 0.5) * 28);
-        my.set(((event.clientY - rect.top) / rect.height - 0.5) * 18);
-      }}
-      onMouseLeave={() => {
-        mx.set(0);
-        my.set(0);
-      }}
-    >
-      <div className="room-frame generated-room-frame">
-        <motion.div className="generated-room-art" style={{ x: artX, y: artY }} />
-        <div className="room-vignette" />
-        <motion.div className="room-interface-layer" style={{ x: overlayX, y: overlayY }} aria-hidden="true" />
+    <div className={`service-orb ${kind}`} aria-hidden="true">
+      <span className="orb-shadow" />
+      <span className="orb-glow" />
+      <i />
+      <i />
+      <i />
+    </div>
+  );
+}
 
-        <Hotspot module={byId.window} className="hotspot-window" />
-        <Hotspot module={byId.map} className="hotspot-map" />
-        <Hotspot module={byId.shelf} className="hotspot-shelf" />
-        <Hotspot module={byId.desk} className="hotspot-desk" />
-        <Hotspot module={byId.core} className="hotspot-core" />
-        <Hotspot module={byId.sport} className="hotspot-sport" />
-        <Hotspot module={byId.contact} className="hotspot-contact" />
-      </div>
-    </section>
+function ChromeHeader() {
+  return (
+    <header className="chrome-header">
+      <a className="wordmark" href="#home">SHIFTER</a>
+      <nav className="desktop-nav" aria-label="Primary navigation">
+        {navItems.slice(0, 4).map(([label, href]) => <a key={label} href={href}>{label}</a>)}
+      </nav>
+      <nav className="right-nav" aria-label="Contact navigation">
+        <a href="#system">Team</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+  );
+}
+
+function SlideDots() {
+  return <div className="slide-dots" aria-hidden="true"><span /><span /></div>;
+}
+
+function FrameFooter() {
+  return (
+    <div className="frame-footer" aria-hidden="true">
+      <div className="mouse-chip"><Mouse size={18} /></div>
+      <div className="share-chip"><Share2 size={16} /><span>Share</span></div>
+    </div>
   );
 }
 
 export default function Home() {
   return (
-    <main className="site-shell text-white">
-      <div className="ambient-grid" />
-      <div className="ambient-light ambient-a" />
-      <div className="ambient-light ambient-b" />
-      <div className="mobile-space-field" aria-hidden="true">
-        <span className="star-layer star-layer-a" />
-        <span className="star-layer star-layer-b" />
-        <span className="star-layer star-layer-c" />
-        <span className="mobile-aurora mobile-aurora-a" />
-        <span className="mobile-aurora mobile-aurora-b" />
-        <span className="shooting-star shooting-star-a" />
-        <span className="shooting-star shooting-star-b" />
+    <main className="page-stage">
+      <div className="outer-glow" />
+      <div className="site-frame">
+        <ChromeHeader />
+
+        <section id="home" className="slide hero-slide">
+          <span className="slide-count">001 / 005</span>
+          <SlideDots />
+          <div className="hero-copy-block">
+            <motion.h1 initial={{ y: 22, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.7 }}>
+              Building clarity systems for students.
+            </motion.h1>
+            <motion.p initial={{ y: 16, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.7, delay: 0.08 }}>
+              I’m Pavel “Shifter” Tagiev — building Mycelium University, AI workflows, and proof-driven learning systems for international education.
+            </motion.p>
+          </div>
+          <div className="hero-action-row">
+            <a className="primary-pill" href="#work">Enter the system <ArrowUpRight size={17} /></a>
+            <a className="ghost-pill" href="#system">View method</a>
+          </div>
+          <NeuralCore />
+          <p className="hero-side-note">A portfolio as an operating surface: projects, learning, admissions research, and agent workflows under one visual system.</p>
+        </section>
+
+        <section id="work" className="slide work-slide">
+          <span className="slide-count">002 / 005</span>
+          <SlideDots />
+          <div className="section-split-heading">
+            <h2>Discover the work</h2>
+            <p>Three active systems, not random portfolio decorations.</p>
+          </div>
+          <div className="work-grid">
+            {workCards.map((card) => (
+              <article className="work-card" key={card.title}>
+                <ServiceOrb kind={card.shape} />
+                <span>{card.label}</span>
+                <h3>{card.title}</h3>
+                <p>{card.text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="system" className="slide system-slide">
+          <span className="slide-count">003 / 005</span>
+          <SlideDots />
+          <NeuralCore />
+          <div className="system-copy">
+            <h2>AI is the workflow, not the headline.</h2>
+            <p>Kapicode is my practical agent layer: research, notes, code, execution, review. The point is not to look futuristic — it is to make better decisions faster.</p>
+          </div>
+        </section>
+
+        <section id="path" className="slide path-slide">
+          <span className="slide-count">004 / 005</span>
+          <SlideDots />
+          <div className="section-split-heading">
+            <h2>Pathway map</h2>
+            <p>International study direction translated into concrete systems and proof.</p>
+          </div>
+          <div className="path-map">
+            {pathItems.map((item, index) => <span key={item} style={{ "--i": index } as React.CSSProperties}>{item}</span>)}
+          </div>
+        </section>
+
+        <section id="contact" className="slide contact-slide">
+          <span className="slide-count">005 / 005</span>
+          <SlideDots />
+          <div className="contact-block">
+            <h2>For universities, builders, and collaborators.</h2>
+            <p>If the work connects to AI, education, admissions clarity, or student systems — this is the public entrance.</p>
+            <div className="contact-row">
+              <a className="primary-pill" href="mailto:agentgmailbox@gmail.com"><Mail size={17} /> Email</a>
+              <a className="ghost-pill" href="https://github.com/ShifterXD" target="_blank" rel="noreferrer"><Code2 size={17} /> GitHub</a>
+            </div>
+          </div>
+        </section>
+
+        <FrameFooter />
       </div>
-      {modules.map((module) => (
-        <ModulePanel key={module.id} module={module} />
-      ))}
-
-      <header className="site-nav">
-        <a href="#room" className="brand-mark">
-          <span>SR</span>
-          <div>
-            <strong>Shifter&apos;s Room</strong>
-            <small>Pavel Tagiev</small>
-          </div>
-        </a>
-        <nav>
-          <a href="#projects">Projects</a>
-          <a href="#system">System</a>
-          <a href="#contact">Contact</a>
-        </nav>
-      </header>
-
-      <section id="room" className="hero-section hero-intro">
-        <div className="hero-copy">
-          <p className="eyebrow">18 · Germany · AI × education × systems</p>
-          <h1>
-            From a student room <span>to an AI education platform.</span>
-          </h1>
-          <p className="hero-lead">
-            I’m Pavel “Shifter” Tagiev — an international student in Germany building Mycelium University: a clearer way for students to understand university fit, requirements, and their next steps.
-          </p>
-          <div className="hero-actions">
-            <a href="#room-interface">Enter the room <ArrowUpRight size={18} /></a>
-            <a href="#story">Read the 2-minute story <Sparkles size={18} /></a>
-          </div>
-        </div>
-
-        <HeroArtifact />
-
-        <div className="mobile-room-card">
-          <div className="mobile-cosmos-card" aria-hidden="true">
-            <span className="orbit orbit-one" />
-            <span className="orbit orbit-two" />
-            <span className="cosmic-core" />
-            <span className="cosmic-node node-a" />
-            <span className="cosmic-node node-b" />
-            <span className="cosmic-node node-c" />
-          </div>
-          <p className="eyebrow">The room metaphor</p>
-          <h2>A focused room, seen from orbit.</h2>
-          <p>The mobile version turns the room into a night-sky signal: one student, one direction, and a system built to make education clearer.</p>
-        </div>
-      </section>
-
-      <section id="room-interface" className="room-showcase-section desktop-only" aria-label="Interactive room interface">
-        <div className="room-showcase-heading">
-          <p className="eyebrow">Interactive room</p>
-          <h2>Hover the objects.</h2>
-          <p>No dots, no wires — just the room. The objects reveal meaning when someone explores.</p>
-        </div>
-        <DesktopRoom />
-      </section>
-
-      <section id="story" className="story-section" aria-label="Two minute story">
-        <div className="section-heading story-heading">
-          <p className="eyebrow">2-minute story</p>
-          <h2>From who I am to why this matters.</h2>
-          <p>Designed for universities, future collaborators, and people who want the signal without reading a long personal diary.</p>
-        </div>
-        <div className="story-grid">
-          {storySteps.map((step) => (
-            <article key={step.label}>
-              <span>{step.label}</span>
-              <h3>{step.title}</h3>
-              <p>{step.text}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section id="projects" className="content-section">
-        <div className="section-heading">
-          <p className="eyebrow">Desk / proof of work</p>
-          <h2>Projects that make the room real.</h2>
-          <p>Not decorative portfolio cards — each project is a system I’m building or using.</p>
-        </div>
-        <div className="project-grid">
-          {projects.map((project) => (
-            <article key={project.name}>
-              <div className="project-status">{project.status}</div>
-              <h3>{project.name}</h3>
-              <p>{project.text}</p>
-              <a href="#contact">Details on request <ExternalLink size={16} /></a>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section id="system" className="system-section">
-        <div className="system-card wide">
-          <p className="eyebrow">Execution system</p>
-          <h2>AI is the workflow, not the headline.</h2>
-          <p>
-            I use AI agents, structured notes, research workflows, and project roadmaps to move from idea to implementation. The goal is simple: better decisions, faster iteration, and visible proof.
-          </p>
-        </div>
-        <div className="system-card">
-          <Activity />
-          <strong>Research loop</strong>
-          <span>sources, notes, analysis, next actions</span>
-        </div>
-        <div className="system-card">
-          <Target />
-          <strong>Admission roadmap</strong>
-          <span>fit, requirements, fees, deadlines</span>
-        </div>
-        <div className="system-card">
-          <FolderKanban />
-          <strong>Builder pipeline</strong>
-          <span>problem → prototype → proof → users</span>
-        </div>
-      </section>
-
-      <section className="learning-strip" aria-label="Learning targets">
-        {learning.map((item) => (
-          <span key={item}>{item}</span>
-        ))}
-      </section>
-
-      <section id="contact" className="contact-section">
-        <div>
-          <p className="eyebrow">Door / signal</p>
-          <h2>Building in AI, education, or student systems?</h2>
-          <p>Let’s connect. This room is the public entrance to the work behind it.</p>
-        </div>
-        <div className="contact-actions">
-          <a href="mailto:agentgmailbox@gmail.com"><Mail size={18} /> Email</a>
-          <a href="#contact"><MessageCircle size={18} /> Telegram / LinkedIn on request</a>
-          <a href="https://github.com/ShifterXD" target="_blank" rel="noreferrer"><Code2 size={18} /> GitHub</a>
-        </div>
-      </section>
-
     </main>
   );
 }
