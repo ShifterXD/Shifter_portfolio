@@ -226,12 +226,10 @@ function DesktopRoom() {
   const my = useMotionValue(0);
   const springX = useSpring(mx, { stiffness: 70, damping: 20 });
   const springY = useSpring(my, { stiffness: 70, damping: 20 });
-  const backX = useTransform(springX, (v) => v * 0.25);
-  const midX = useTransform(springX, (v) => v * 0.55);
-  const frontX = useTransform(springX, (v) => v * 0.9);
-  const backY = useTransform(springY, (v) => v * 0.22);
-  const midY = useTransform(springY, (v) => v * 0.48);
-  const frontY = useTransform(springY, (v) => v * 0.75);
+  const artX = useTransform(springX, (v) => v * 0.42);
+  const artY = useTransform(springY, (v) => v * 0.28);
+  const overlayX = useTransform(springX, (v) => v * 0.85);
+  const overlayY = useTransform(springY, (v) => v * 0.6);
 
   const byId = Object.fromEntries(modules.map((item) => [item.id, item])) as Record<RoomModuleId, RoomModule>;
 
@@ -248,73 +246,32 @@ function DesktopRoom() {
         my.set(0);
       }}
     >
-      <div className="room-frame">
-        <motion.div className="room-layer room-back" style={{ x: backX, y: backY }}>
-          <div className="night-window">
-            <div className="city-line" />
-            <div className="moon" />
+      <div className="room-frame generated-room-frame">
+        <motion.div className="generated-room-art" style={{ x: artX, y: artY }} />
+        <div className="room-vignette" />
+        <motion.div className="room-interface-layer" style={{ x: overlayX, y: overlayY }}>
+          <div className="interface-chip chip-mission">
+            <span>LIVE ROOM</span>
+            <strong>Mycelium build space</strong>
           </div>
-          <div className="wall-map">
-            <span>TUM</span>
-            <span>Nagoya</span>
-            <span>JADS</span>
-            <span>UC3M</span>
+          <div className="interface-chip chip-pathway">
+            <span>PATHWAY</span>
+            <strong>AI admissions map</strong>
           </div>
-          <div className="mission-board">
-            <b>MISSION</b>
-            <span>Build Mycelium</span>
-            <span>SAT → 1400</span>
-            <span>IELTS → 7.5</span>
-          </div>
-          <div className="shelf-rail">
-            {learning.slice(0, 5).map((item) => (
-              <i key={item}>{item.split(" ")[0]}</i>
-            ))}
+          <div className="interface-line line-desk" />
+          <div className="interface-line line-core" />
+          <div className="room-caption generated-caption">
+            <p>Not a cheap template.</p>
+            <strong>A cinematic room interface for the work.</strong>
           </div>
         </motion.div>
 
-        <motion.div className="room-layer room-mid" style={{ x: midX, y: midY }}>
-          <div className="desk-illustration">
-            <div className="desk-lamp"><span /></div>
-            <div className="main-monitor">
-              <div className="screen-grid" />
-              <strong>MYCELIUM</strong>
-              <small>admission roadmap engine</small>
-            </div>
-            <div className="laptop-slab" />
-            <div className="keyboard-row" />
-          </div>
-          <div className="kapicode-core">
-            <span className="core-ring" />
-            <Brain size={26} />
-          </div>
-          <div className="sports-corner">
-            <div className="ball" />
-            <div className="band" />
-            <div className="dumbbell" />
-          </div>
-          <div className="door-signal">
-            <Mail size={22} />
-            <span>OPEN SIGNAL</span>
-          </div>
-        </motion.div>
-
-        <motion.div className="room-layer room-front" style={{ x: frontX, y: frontY }}>
-          <div className="floor-perspective" />
-          <div className="rug" />
-          <div className="chair" />
-          <div className="room-caption">
-            <p>This is not a 3D model.</p>
-            <strong>It is a symbolic room interface.</strong>
-          </div>
-        </motion.div>
-
-        <Hotspot module={byId.desk} className="hotspot-desk" />
-        <Hotspot module={byId.shelf} className="hotspot-shelf" />
+        <Hotspot module={byId.window} className="hotspot-window" />
         <Hotspot module={byId.map} className="hotspot-map" />
+        <Hotspot module={byId.shelf} className="hotspot-shelf" />
+        <Hotspot module={byId.desk} className="hotspot-desk" />
         <Hotspot module={byId.core} className="hotspot-core" />
         <Hotspot module={byId.sport} className="hotspot-sport" />
-        <Hotspot module={byId.window} className="hotspot-window" />
         <Hotspot module={byId.contact} className="hotspot-contact" />
       </div>
     </section>

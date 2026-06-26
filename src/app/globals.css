@@ -168,7 +168,7 @@ button { font: inherit; }
 .hero-actions button:hover,
 .contact-actions a:hover { transform: translateY(-2px); background: rgba(255,255,255,.13); border-color: rgba(255,255,255,.22); }
 
-.desktop-room-shell { position: relative; width: min(100%, 38rem); min-width: 0; justify-self: end; }
+.desktop-room-shell { position: relative; width: min(100%, 46rem); min-width: 0; justify-self: end; }
 .room-frame {
   position: relative;
   aspect-ratio: 1.25;
@@ -272,6 +272,77 @@ button { font: inherit; }
 .room-caption { position:absolute; left:5%; bottom:6%; width:18rem; border:1px solid rgba(255,255,255,.1); border-radius:1rem; background: rgba(3,7,18,.5); padding:.85rem; backdrop-filter: blur(12px); }
 .room-caption p { color:#94a3b8; font-size:.78rem; }
 .room-caption strong { display:block; margin-top:.1rem; color:#f8fafc; font-size:.9rem; }
+.generated-room-frame {
+  aspect-ratio: 1.52;
+  min-height: 30rem;
+  border-color: rgba(148, 213, 255, .2);
+  border-radius: 2rem;
+  background: #020611;
+  box-shadow:
+    0 42px 140px rgba(0,0,0,.58),
+    0 0 90px rgba(56,189,248,.14),
+    inset 0 1px 0 rgba(255,255,255,.12);
+  isolation: isolate;
+}
+.generated-room-frame::before {
+  inset: .7rem;
+  z-index: 8;
+  border-color: rgba(255,255,255,.12);
+  border-radius: 1.55rem;
+}
+.generated-room-frame::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:6;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg, rgba(2,6,23,.48) 0%, rgba(2,6,23,.18) 34%, transparent 58%),
+    radial-gradient(circle at 78% 52%, rgba(56,189,248,.16), transparent 23rem),
+    radial-gradient(circle at 54% 58%, rgba(245,158,11,.12), transparent 20rem);
+}
+.generated-room-art {
+  position:absolute;
+  inset:-1.4rem;
+  z-index:1;
+  background-image:
+    url("/Shifter_portfolio/assets/shifter-room-bg.png"),
+    url("/assets/shifter-room-bg.png");
+  background-size: cover;
+  background-position: 68% center;
+  filter: saturate(1.08) contrast(1.05);
+  transform: scale(1.02);
+  will-change: transform;
+}
+.room-vignette {
+  position:absolute;
+  inset:0;
+  z-index:5;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 74% 42%, transparent 0 28%, rgba(2,6,23,.18) 56%, rgba(2,6,23,.68) 100%),
+    linear-gradient(180deg, rgba(255,255,255,.05), transparent 18%, rgba(0,0,0,.42));
+  mix-blend-mode: normal;
+}
+.room-interface-layer { position:absolute; inset:0; z-index:10; pointer-events:none; will-change:transform; }
+.interface-chip {
+  position:absolute;
+  max-width: 13rem;
+  border:1px solid rgba(125,211,252,.24);
+  border-radius: 1rem;
+  background: rgba(2,8,23,.52);
+  padding:.72rem .82rem;
+  box-shadow: 0 0 32px rgba(56,189,248,.12), inset 0 1px 0 rgba(255,255,255,.12);
+  backdrop-filter: blur(14px);
+}
+.interface-chip span { display:block; color:#7dd3fc; font-family:var(--font-geist-mono),monospace; font-size:.64rem; font-weight:950; letter-spacing:.16em; }
+.interface-chip strong { display:block; margin-top:.25rem; color:#f8fafc; font-size:.86rem; line-height:1.18; }
+.chip-mission { left: 5%; top: 9%; }
+.chip-pathway { right: 7%; top: 9%; }
+.interface-line { position:absolute; height:1px; transform-origin:left center; background:linear-gradient(90deg, rgba(125,211,252,.75), rgba(125,211,252,0)); filter:drop-shadow(0 0 8px rgba(125,211,252,.45)); }
+.line-desk { left: 18%; top: 23%; width: 19rem; rotate: 19deg; }
+.line-core { right: 20%; top: 22%; width: 11rem; rotate: 104deg; }
+.generated-caption { left: 5%; bottom: 6%; width: 19.5rem; border-color: rgba(125,211,252,.18); background: rgba(2,8,23,.58); z-index:12; }
 
 .room-hotspot { position:absolute; z-index:12; border:0; background:transparent; cursor:pointer; color:white; }
 .hotspot-pulse { position:absolute; left:50%; top:50%; width:.85rem; height:.85rem; translate:-50% -50%; border-radius:999px; background: var(--hotspot); box-shadow:0 0 0 .45rem color-mix(in srgb, var(--hotspot) 20%, transparent), 0 0 30px var(--hotspot); }
@@ -280,13 +351,13 @@ button { font: inherit; }
 .hotspot-label strong { display:block; color:#fff; font-size:.86rem; }
 .hotspot-label small { display:block; margin-top:.15rem; color:#cbd5e1; line-height:1.35; }
 .room-hotspot:hover .hotspot-label { opacity:1; translate:-50% 0; }
-.hotspot-desk { left: 41%; top: 50%; }
-.hotspot-shelf { left: 47%; top: 37%; }
-.hotspot-map { right: 20%; top: 22%; }
-.hotspot-core { left: 66%; top: 54%; }
-.hotspot-sport { right: 15%; bottom: 22%; }
-.hotspot-window { left: 19%; top: 25%; }
-.hotspot-contact { right: 9%; top: 50%; }
+.hotspot-desk { left: 61%; top: 58%; }
+.hotspot-shelf { right: 9%; top: 23%; }
+.hotspot-map { right: 32%; top: 28%; }
+.hotspot-core { right: 10%; top: 55%; }
+.hotspot-sport { right: 9%; bottom: 15%; }
+.hotspot-window { left: 49%; top: 22%; }
+.hotspot-contact { right: 4%; top: 50%; }
 
 .mobile-room-card { display:none; }
 .mobile-index { display:none; }
