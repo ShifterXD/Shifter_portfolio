@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useScroll, useSpring } from "framer-motion";
+import { useEffect, useState } from "react";
 import { ArrowUpRight, BookOpen, Camera, FolderKanban, Mail, Medal, Sparkles } from "lucide-react";
 
 const navItems = [
@@ -44,16 +45,44 @@ function ScrollProgress() {
 }
 
 function ChromeHeader() {
+  const [activeSection, setActiveSection] = useState("home");
+
+  useEffect(() => {
+    const sections = navItems
+      .map(([, href]) => document.querySelector(href))
+      .filter(Boolean) as Element[];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible?.target.id) setActiveSection(visible.target.id);
+      },
+      { rootMargin: "-38% 0px -45% 0px", threshold: [0.18, 0.35, 0.55] }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <motion.header
       className="chrome-header"
-      initial={{ y: -24, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
+      initial={{ y: -26, opacity: 0, filter: "blur(10px)" }}
+      animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
       transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
     >
       <a className="wordmark" href="#home">SHIFTER</a>
       <nav className="desktop-nav" aria-label="Primary navigation">
-        {navItems.map(([label, href]) => <a key={label} href={href}>{label}</a>)}
+        {navItems.map(([label, href]) => {
+          const id = href.replace("#", "");
+          return (
+            <a key={label} href={href} className={activeSection === id ? "is-active" : ""}>
+              {label}
+            </a>
+          );
+        })}
       </nav>
     </motion.header>
   );
@@ -68,14 +97,37 @@ function SectionShell({ id, count, eyebrow, title, children, className = "" }: {
   className?: string;
 }) {
   return (
-    <section id={id} className={`section-shell ${className}`}>
-      <div className="section-meta">
+    <motion.section
+      id={id}
+      className={`section-shell ${className}`}
+      initial={{ opacity: 0.72, y: 34, scale: 0.985 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: false, amount: 0.34 }}
+      transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <motion.div
+        className="section-meta"
+        initial={{ opacity: 0, x: -18 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: false, amount: 0.45 }}
+        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+      >
         <span>{count}</span>
         {eyebrow && <p>{eyebrow}</p>}
-      </div>
-      {title && <h2 className="section-title">{title}</h2>}
+      </motion.div>
+      {title && (
+        <motion.h2
+          className="section-title"
+          initial={{ opacity: 0, y: 26, filter: "blur(8px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: false, amount: 0.45 }}
+          transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
+        >
+          {title}
+        </motion.h2>
+      )}
       {children}
-    </section>
+    </motion.section>
   );
 }
 
